@@ -19,7 +19,20 @@ const allButtonContinue = document.querySelectorAll("[data-button-continue]");
 const thankYou = document.querySelector("[data-thank-you]");
 const thankYouCompleted = document.querySelector("[data-thank-you-completed]");
 
+const totalBackers = document.querySelector("[data-current-backers]");
+let backersValue = +totalBackers.innerText.split(",").join("");
 
+const achievedAmount = document.querySelector("[data-amount-achieved]");
+let achievedValue = +achievedAmount.innerText.split(",").join("");
+const targetAmount = document.querySelector("[data-target-amount]");
+let targetValue = +targetAmount.innerText.split(",").join("");
+
+const parentProgress = document.querySelector("[data-parent-progress]");
+const statusBar = document.querySelector("[data-status-bar]");
+
+
+let progressValue = ((achievedValue / targetValue) * parentProgress.clientWidth);
+statusBar.style.width = `${progressValue}px`;
 
 hamburger.addEventListener("click", () => {
 	nav.classList.add("show");
@@ -106,9 +119,24 @@ allRadioButtons.forEach((radioButton) => {
 	})
 })
 
+numberFormat = new Intl.NumberFormat("en-US");
 allButtonContinue.forEach((buttonContinue) => {
 	buttonContinue.addEventListener("click", () => {
-		thankYou.classList.add("show-flex");
+		if (buttonContinue.previousElementSibling.querySelector("input").value === "") {
+			alert("Enter a valid number amount");
+		}
+		else {
+			thankYou.classList.add("show-flex");
+
+			backersValue++;
+			totalBackers.textContent = numberFormat.format(backersValue);
+
+			achievedValue += +buttonContinue.previousElementSibling.querySelector("input").value;
+			achievedAmount.textContent = numberFormat.format(achievedValue);
+
+			progressValue = ((achievedValue / targetValue) * parentProgress.clientWidth);
+			statusBar.style.width = `${progressValue}px`;
+		}
 	})
 })
 

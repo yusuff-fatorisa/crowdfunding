@@ -45,11 +45,11 @@
         <div class="backers">
           <div class="stats">
             <div class="backed">
-              <h2>$89,914</h2>
-              <p>of $100,000 backed</p>
+              <h2>$<span data-amount-achieved>89,914</span></h2>
+              <p>of $<span data-target-amount>100,000</span> backed</p>
             </div>
             <div class="total">
-              <h2>5,007</h2>
+              <h2 data-current-backers>5,007</h2>
               <p>total backers</p>
             </div>
             <div class="days">
@@ -57,8 +57,8 @@
               <p>days left</p>
             </div>
           </div>
-          <div class="progress">
-            <div class="status"></div>
+          <div data-parent-progress class="progress">
+            <div data-status-bar class="status"></div>
           </div>
         </div>
         <div class="about">
@@ -144,7 +144,7 @@
               <div class="amount-proceed">
                 <div>
                   <span>$</span>
-                  <input type="number" name="pledge-amount" min="1" max="24.99" value="1">
+                  <input type="number" name="pledge-amount" min="1" max="24.99" value="1" required>
                   <span>|</span>
                 </div>
                 <button data-button-continue>Continue</button>
@@ -180,7 +180,7 @@
               <div class="amount-proceed">
                 <div>
                   <span>$</span>
-                  <input type="number" name="pledge-amount" min="25" max="74.99" value="25">
+                  <input type="number" name="pledge-amount" min="25" max="74.99" value="25" required>
                   <span>|</span>
                 </div>
                 <button data-button-continue>Continue</button>

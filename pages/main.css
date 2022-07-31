@@ -234,6 +234,11 @@ body {
 	border-radius: 10px;
 }
 
+.backers .progress .status {
+	background-color: var(--Moderate-cyan);
+	border-radius: 20px;
+}
+
 /*About Styling*/
 
 .container .bottom .about {
