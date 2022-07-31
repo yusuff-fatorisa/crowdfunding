@@ -34,8 +34,11 @@
           <h2>Mastercraft Bamboo <br>Monitor Riser</h2>
           <span>A beautiful & handcrafted monitor stand to <br>reduce neck and eye strain.</span>
           <div class="button-bookmark">
-            <button>Back this project</button>
-            <button><i class="fa-solid fa-bookmark"></i>Bookmark</button>
+            <button data-back-project>Back this project</button>
+            <button data-bookmark>
+              <i data-bookmark-icon class="fa-solid fa-bookmark"></i>
+              <span data-bookmark-text>Bookmark</span>
+            </button>
           </div>
           <img src="./images/logo-mastercraft.svg" alt="mastercraft logo">
         </div>
@@ -79,7 +82,7 @@
                 <h2>101</h2>
                 <p>left</p>
               </div>
-              <button>Select Reward</button>
+              <button data-select-reward>Select Reward</button>
             </div>
           </div>
           <div class="black">
@@ -95,7 +98,7 @@
                 <h2>64</h2>
                 <p>left</p>
               </div>
-              <button>Select Reward</button>
+              <button data-select-reward>Select Reward</button>
             </div>
           </div>
           <div class="mahogany">
@@ -111,21 +114,21 @@
                 <h2>0</h2>
                 <p>left</p>
               </div>
-              <button>Out of Stock</button>
+              <button data-select-reward>Out of Stock</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="active-modal-layer">
+      <div data-choose-package class="active-modal-layer">
         <div class="active-modal">
           <h2>Back this project</h2>
           <span>Want to support us in bringing Mastercraft <br>Bamboo Monitor Riser out in the world?</span>
-          <div class="modal no-reward similar">
-            <img src="./images/icon-close-modal.svg" alt="close">
+          <div data-pledge-action class="modal noReward no-reward similar">
+            <img data-close-all-packages src="./images/icon-close-modal.svg" alt="close">
             <div class="above">
               <div class="pledge-details">
                 <div class="name">
-                  <input type="radio" id="noReward" name="choose-package">
+                  <input data-input-radio type="radio" id="noReward" name="choose-package">
                   <div>
                     <label for="noReward">Pledge with no reward</label>
                   </div>
@@ -144,15 +147,15 @@
                   <input type="number" name="pledge-amount" min="1" max="24.99" value="1">
                   <span>|</span>
                 </div>
-                <button>Continue</button>
+                <button data-button-continue>Continue</button>
               </div>
             </div>
           </div>
-          <div class="modal bamboo similar">
+          <div data-pledge-action id="bamboo" class="modal bamboo-stand bamboo-edition similar">
             <div class="above">
               <div class="pledge-details">
                 <div class="name">
-                  <input type="radio" id="bamboo-stand" name="choose-package">
+                  <input data-input-radio type="radio" id="bamboo-stand" name="choose-package">
                   <div>
                     <label for="bamboo-stand">Bamboo Stand</label>
                     <h5>Pledge $25 or more</h5>
@@ -180,15 +183,15 @@
                   <input type="number" name="pledge-amount" min="25" max="74.99" value="25">
                   <span>|</span>
                 </div>
-                <button>Continue</button>
+                <button data-button-continue>Continue</button>
               </div>
             </div>
           </div>
-          <div class="modal black-edition similar">
+          <div data-pledge-action id="black" class="modal black-stand black-edition similar">
             <div class="above">
               <div class="pledge-details">
                 <div class="name">
-                  <input type="radio" id="black-stand" name="choose-package">
+                  <input data-input-radio type="radio" id="black-stand" name="choose-package">
                   <div>
                     <label for="black-stand">Black Edition Stand</label>
                     <h5>Pledge $75 or more</h5>
@@ -216,15 +219,15 @@
                   <input type="number" name="pledge-amount" min="75" max="199.99" value="75">
                   <span>|</span>
                 </div>
-                <button>Continue</button>
+                <button data-button-continue>Continue</button>
               </div>
             </div>
           </div>
-          <div class="modal mahogany-special similar">
+          <div data-pledge-action id="mahogany" class="modal mahogany-stand mahogany-special similar">
             <div class="above">
               <div class="pledge-details">
                 <div class="name">
-                  <input type="radio" id="mahogany-stand" name="choose-package">
+                  <input data-input-radio type="radio" id="mahogany-stand" name="choose-package">
                   <div>
                     <label for="mahogany-stand">Mahogany Special Edition</label>
                     <h5>Pledge $200 or more</h5>
@@ -252,13 +255,13 @@
                   <input type="number" name="pledge-amount" min="200" value="200">
                   <span>|</span>
                 </div>
-                <button>Continue</button>
+                <button data-button-continue>Continue</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="thank-you-layer">
+      <div data-thank-you class="thank-you-layer">
         <div class="thank-you">
           <img src="./images/icon-check.svg" alt="check mark">
           <div class="texts">
@@ -266,7 +269,7 @@
             <span>
               Your pledge brings us one step closer to sharing Mastercraft. <br>Bamboo Monitor Riser worldwide. You will get an email once <br>our campaign is completed.
             </span>
-            <button>Got it!</button>
+            <button data-thank-you-completed>Got it!</button>
           </div>
         </div>
       </div>
