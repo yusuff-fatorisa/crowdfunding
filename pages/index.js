@@ -30,9 +30,31 @@ let targetValue = +targetAmount.innerText.split(",").join("");
 const parentProgress = document.querySelector("[data-parent-progress]");
 const statusBar = document.querySelector("[data-status-bar]");
 
+const checkAvailability = document.querySelectorAll("[data-check-availability]");
+
 
 let progressValue = ((achievedValue / targetValue) * parentProgress.clientWidth);
 statusBar.style.width = `${progressValue}px`;
+
+for (let available of checkAvailability) {
+	if (+available.innerText === 0) {
+		available.parentElement.parentElement.parentElement.style.opacity = "0.25";
+		available.parentElement.parentElement.parentElement.querySelector("button").style.backgroundColor = `var(--Dark-gray)`;
+		available.parentElement.parentElement.parentElement.querySelector("button").style.cursor = "initial";
+		available.parentElement.parentElement.parentElement.querySelector("button").textContent = `Out of Stock`;
+		available.parentElement.parentElement.parentElement.querySelector("button").setAttribute("disabled", "");
+
+		for (let pledgeAction of allPledgeActions) {
+			if (pledgeAction.getAttribute("id") === available.parentElement.parentElement.parentElement.getAttribute("class")) {
+				pledgeAction.style.opacity = "0.25";
+				pledgeAction.querySelector("input").setAttribute("disabled", "");
+				pledgeAction.querySelector("input").style.cursor = "initial";
+				pledgeAction.querySelector("label").style.cursor = "initial";
+				pledgeAction.querySelector("button").setAttribute("disabled", "");
+			}
+		}
+	}
+}
 
 hamburger.addEventListener("click", () => {
 	nav.classList.add("show");
@@ -124,6 +146,9 @@ allButtonContinue.forEach((buttonContinue) => {
 	buttonContinue.addEventListener("click", () => {
 		if (buttonContinue.previousElementSibling.querySelector("input").value === "") {
 			alert("Enter a valid number amount");
+		}
+		else if (buttonContinue.previousElementSibling.querySelector("input").value < buttonContinue.previousElementSibling.querySelector("input").getAttribute("min") || buttonContinue.previousElementSibling.querySelector("input").value > buttonContinue.previousElementSibling.querySelector("input").getAttribute("max")) {
+			alert(`Enter an amount between ${buttonContinue.previousElementSibling.querySelector("input").getAttribute("min")} to ${buttonContinue.previousElementSibling.querySelector("input").getAttribute("max")} or choose another package`);
 		}
 		else {
 			thankYou.classList.add("show-flex");
