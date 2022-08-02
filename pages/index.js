@@ -87,50 +87,57 @@ allSelectRewards.forEach(element => {
 			if (buttonParent.classList.contains(pledgeAction.getAttribute("id"))) {
 				pledgeAction.querySelector("hr").classList.add("show-block");
 				pledgeAction.querySelector(".below").classList.add("show-flex");
-				pledgeAction.querySelector(".above > .pledge-details > .name > input").setAttribute("checked", true);
+				pledgeAction.querySelector(".pledge-details .name > div > label").click();
 				pledgeAction.classList.add("change-border");
 			}
 			else {
 				pledgeAction.querySelector("hr").classList.remove("show-block");
 				pledgeAction.querySelector(".below").classList.remove("show-flex");
-				pledgeAction.querySelector(".above .pledge-details .name > input").removeAttribute("checked");
+				// pledgeAction.querySelector(".above .pledge-details .name > input").removeAttribute("checked");
 				pledgeAction.classList.remove("change-border");
 			}
 		}
 		closePackages.addEventListener("click", () => {
 			allPackagesDisplay.classList.remove("show-flex");
 		})
+		allRadioButtons.forEach((radioButton) => {
+			radioButton.addEventListener("click", () => {
+				for (let pledgeAction of allPledgeActions) {
+					if (pledgeAction.classList.contains(radioButton.getAttribute("id"))) {
+						pledgeAction.querySelector("hr").classList.add("show-block");
+						pledgeAction.querySelector(".below").classList.add("show-flex");
+						pledgeAction.classList.add("change-border");
+
+					}
+					else {
+						pledgeAction.querySelector("hr").classList.remove("show-block");
+						pledgeAction.querySelector(".below").classList.remove("show-flex");
+						// pledgeAction.querySelector(".above .pledge-details .name > input").click();
+						pledgeAction.classList.remove("change-border");
+					}
+				}
+			})
+		})
 	})
 })
 
-allRadioButtons.forEach((radioButton) => {
-	radioButton.addEventListener("click", () => {
-		for (let pledgeAction of allPledgeActions) {
-			if (pledgeAction.classList.contains(radioButton.getAttribute("id"))) {
-				pledgeAction.querySelector("hr").classList.add("show-block");
-				pledgeAction.querySelector(".below").classList.add("show-flex");
-				pledgeAction.classList.add("change-border");
-			}
-			else {
-				pledgeAction.querySelector("hr").classList.remove("show-block");
-				pledgeAction.querySelector(".below").classList.remove("show-flex");
-				pledgeAction.querySelector(".above .pledge-details .name > input").removeAttribute("checked");
-				pledgeAction.classList.remove("change-border");
-			}
-		}
-	})
-})
 
 numberFormat = new Intl.NumberFormat("en-US");
 allButtonContinue.forEach((buttonContinue) => {
 	buttonContinue.addEventListener("click", () => {
 		if (buttonContinue.previousElementSibling.querySelector("input").value === "") {
 			alert("Enter a valid number amount");
-		}
-		else if (buttonContinue.previousElementSibling.querySelector("input").value < buttonContinue.previousElementSibling.querySelector("input").getAttribute("min") || buttonContinue.previousElementSibling.querySelector("input").value > buttonContinue.previousElementSibling.querySelector("input").getAttribute("max")) {
+		}/*
+		if (buttonContinue.previousElementSibling.querySelector("input").value == "1") {
+			alert("test");
+		}*/
+		else if (+buttonContinue.previousElementSibling.querySelector("input").value < +buttonContinue.previousElementSibling.querySelector("input").getAttribute("min") || +buttonContinue.previousElementSibling.querySelector("input").value > +buttonContinue.previousElementSibling.querySelector("input").getAttribute("max")) {
 			alert(`Enter an amount from ${buttonContinue.previousElementSibling.querySelector("input").getAttribute("min")} to ${buttonContinue.previousElementSibling.querySelector("input").getAttribute("max")} or choose another package`);
 		}
 		else {
+			console.log(buttonContinue.previousElementSibling.querySelector("input").value);
+			console.log(buttonContinue.previousElementSibling.querySelector("input").getAttribute("min"));
+			console.log(buttonContinue.previousElementSibling.querySelector("input").getAttribute("max"));
 			thankYou.classList.add("show-flex");
 
 			backersValue++;
