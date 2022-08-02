@@ -6,7 +6,6 @@ const bookmark = document.querySelector("[data-bookmark]");
 const bookmarkText = document.querySelector("[data-bookmark-text]");
 const bookmarkIcon = document.querySelector("[data-bookmark-icon]");
 
-const buttonBackProject = document.querySelector("[data-back-project]");
 const allPackagesDisplay = document.querySelector("[data-choose-package]");
 const closePackages = document.querySelector("[data-close-all-packages]");
 
@@ -80,34 +79,12 @@ bookmark.addEventListener("click", () => {
 	bookmarkIcon.classList.toggle("fa-bookmarked");
 })
 
-buttonBackProject.addEventListener("click", () => {
-	allPackagesDisplay.classList.add("show-flex");
-	allPledgeActions.forEach((elementPledgeAction) => {
-		if (elementPledgeAction.getAttribute("id") === null) {
-			elementPledgeAction.querySelector("hr").classList.add("show-block");
-			elementPledgeAction.querySelector(".below").classList.add("show-flex");
-			elementPledgeAction.querySelector(".above > .pledge-details > .name > input").setAttribute("checked", true);
-			elementPledgeAction.classList.add("change-border");
-		}
-		else {
-			elementPledgeAction.querySelector("hr").classList.remove("show-block");
-			elementPledgeAction.querySelector(".below").classList.remove("show-flex");
-			elementPledgeAction.querySelector(".above .pledge-details .name > input").removeAttribute("checked");
-			elementPledgeAction.classList.remove("change-border");
-		}
-	})
-})
-
-closePackages.addEventListener("click", () => {
-	allPackagesDisplay.classList.remove("show-flex");
-})
-
 allSelectRewards.forEach(element => {
 	element.addEventListener("click", () => {
 		allPackagesDisplay.classList.add("show-flex");
-		const buttonParent = element.parentElement.parentElement.getAttribute("class");
+		const buttonParent = element.parentElement.parentElement;
 		for (let pledgeAction of allPledgeActions) {
-			if (pledgeAction.getAttribute("id") === buttonParent) {
+			if (buttonParent.classList.contains(pledgeAction.getAttribute("id"))) {
 				pledgeAction.querySelector("hr").classList.add("show-block");
 				pledgeAction.querySelector(".below").classList.add("show-flex");
 				pledgeAction.querySelector(".above > .pledge-details > .name > input").setAttribute("checked", true);
@@ -120,6 +97,9 @@ allSelectRewards.forEach(element => {
 				pledgeAction.classList.remove("change-border");
 			}
 		}
+		closePackages.addEventListener("click", () => {
+			allPackagesDisplay.classList.remove("show-flex");
+		})
 	})
 })
 
@@ -148,7 +128,7 @@ allButtonContinue.forEach((buttonContinue) => {
 			alert("Enter a valid number amount");
 		}
 		else if (buttonContinue.previousElementSibling.querySelector("input").value < buttonContinue.previousElementSibling.querySelector("input").getAttribute("min") || buttonContinue.previousElementSibling.querySelector("input").value > buttonContinue.previousElementSibling.querySelector("input").getAttribute("max")) {
-			alert(`Enter an amount between ${buttonContinue.previousElementSibling.querySelector("input").getAttribute("min")} to ${buttonContinue.previousElementSibling.querySelector("input").getAttribute("max")} or choose another package`);
+			alert(`Enter an amount from ${buttonContinue.previousElementSibling.querySelector("input").getAttribute("min")} to ${buttonContinue.previousElementSibling.querySelector("input").getAttribute("max")} or choose another package`);
 		}
 		else {
 			thankYou.classList.add("show-flex");
@@ -161,7 +141,30 @@ allButtonContinue.forEach((buttonContinue) => {
 
 			progressValue = ((achievedValue / targetValue) * parentProgress.clientWidth);
 			statusBar.style.width = `${progressValue}px`;
+			buttonContinue.previousElementSibling.querySelector("input").value = buttonContinue.previousElementSibling.querySelector("input").getAttribute("value");
+
+			const buttonParent = buttonContinue.parentElement.parentElement.parentElement;
+			if (buttonParent.getAttribute("id") === "general") {
+				return;
+			}
+			else {
+				const sampleCounter = buttonParent.querySelector("[data-count-slots]");
+				let sampleCount = +sampleCounter.innerText;
+				sampleCount--;
+
+				const allSlotCounters = buttonParent.querySelectorAll("[data-count-slots]");
+				allSlotCounters.forEach((slotCounter) => {
+					slotCounter.textContent = sampleCount;
+				})
+
+				checkAvailability.forEach((available) => {
+					if (buttonParent.getAttribute("id") === available.parentElement.parentElement.parentElement.getAttribute("class")) {
+						available.textContent = sampleCount;
+					}
+				})
+			}
 		}
+
 	})
 })
 
