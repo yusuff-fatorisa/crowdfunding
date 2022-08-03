@@ -12,7 +12,7 @@ const closePackages = document.querySelector("[data-close-all-packages]");
 const allSelectRewards = document.querySelectorAll("[data-select-reward]");
 const allPledgeActions = document.querySelectorAll("[data-pledge-action]");
 
-const allRadioButtons = document.querySelectorAll("[data-input-radio]");
+const allLabelLinks = document.querySelectorAll("[data-input-radio]");
 
 const allButtonContinue = document.querySelectorAll("[data-button-continue]");
 const thankYou = document.querySelector("[data-thank-you]");
@@ -93,17 +93,16 @@ allSelectRewards.forEach(element => {
 			else {
 				pledgeAction.querySelector("hr").classList.remove("show-block");
 				pledgeAction.querySelector(".below").classList.remove("show-flex");
-				// pledgeAction.querySelector(".above .pledge-details .name > input").removeAttribute("checked");
 				pledgeAction.classList.remove("change-border");
 			}
 		}
 		closePackages.addEventListener("click", () => {
 			allPackagesDisplay.classList.remove("show-flex");
 		})
-		allRadioButtons.forEach((radioButton) => {
-			radioButton.addEventListener("click", () => {
+		allLabelLinks.forEach((labelLink) => {
+			labelLink.addEventListener("click", () => {
 				for (let pledgeAction of allPledgeActions) {
-					if (pledgeAction.classList.contains(radioButton.getAttribute("id"))) {
+					if (pledgeAction.classList.contains(labelLink.getAttribute("id"))) {
 						pledgeAction.querySelector("hr").classList.add("show-block");
 						pledgeAction.querySelector(".below").classList.add("show-flex");
 						pledgeAction.classList.add("change-border");
@@ -112,7 +111,6 @@ allSelectRewards.forEach(element => {
 					else {
 						pledgeAction.querySelector("hr").classList.remove("show-block");
 						pledgeAction.querySelector(".below").classList.remove("show-flex");
-						// pledgeAction.querySelector(".above .pledge-details .name > input").click();
 						pledgeAction.classList.remove("change-border");
 					}
 				}
@@ -125,30 +123,28 @@ allSelectRewards.forEach(element => {
 numberFormat = new Intl.NumberFormat("en-US");
 allButtonContinue.forEach((buttonContinue) => {
 	buttonContinue.addEventListener("click", () => {
-		if (buttonContinue.previousElementSibling.querySelector("input").value === "") {
+		const donation = +buttonContinue.previousElementSibling.querySelector("input").value;
+		const categoryMin = +buttonContinue.previousElementSibling.querySelector("input").getAttribute("min");
+		const categoryMax = +buttonContinue.previousElementSibling.querySelector("input").getAttribute("max");
+		const categoryDefault = buttonContinue.previousElementSibling.querySelector("input").getAttribute("value")
+		if (donation === "") {
 			alert("Enter a valid number amount");
-		}/*
-		if (buttonContinue.previousElementSibling.querySelector("input").value == "1") {
-			alert("test");
-		}*/
-		else if (+buttonContinue.previousElementSibling.querySelector("input").value < +buttonContinue.previousElementSibling.querySelector("input").getAttribute("min") || +buttonContinue.previousElementSibling.querySelector("input").value > +buttonContinue.previousElementSibling.querySelector("input").getAttribute("max")) {
-			alert(`Enter an amount from ${buttonContinue.previousElementSibling.querySelector("input").getAttribute("min")} to ${buttonContinue.previousElementSibling.querySelector("input").getAttribute("max")} or choose another package`);
+		}
+		else if (donation < categoryMin || donation > categoryMax) {
+			alert(`Enter an amount from ${categoryMin} to ${categoryMax} or choose another package`);
 		}
 		else {
-			console.log(buttonContinue.previousElementSibling.querySelector("input").value);
-			console.log(buttonContinue.previousElementSibling.querySelector("input").getAttribute("min"));
-			console.log(buttonContinue.previousElementSibling.querySelector("input").getAttribute("max"));
 			thankYou.classList.add("show-flex");
 
 			backersValue++;
 			totalBackers.textContent = numberFormat.format(backersValue);
 
-			achievedValue += +buttonContinue.previousElementSibling.querySelector("input").value;
-			achievedAmount.textContent = numberFormat.format(achievedValue);
+			achievedValue += donation
+			achievedAmount.textContent = numberFormat.format(Math.floor(achievedValue));
 
 			progressValue = ((achievedValue / targetValue) * parentProgress.clientWidth);
 			statusBar.style.width = `${progressValue}px`;
-			buttonContinue.previousElementSibling.querySelector("input").value = buttonContinue.previousElementSibling.querySelector("input").getAttribute("value");
+			buttonContinue.previousElementSibling.querySelector("input").value = categoryDefault;
 
 			const buttonParent = buttonContinue.parentElement.parentElement.parentElement;
 			if (buttonParent.getAttribute("id") === "general") {
@@ -168,6 +164,24 @@ allButtonContinue.forEach((buttonContinue) => {
 					if (buttonParent.getAttribute("id") === available.parentElement.parentElement.parentElement.getAttribute("class")) {
 						available.textContent = sampleCount;
 					}
+					if (+available.innerText === 0) {
+						available.parentElement.parentElement.parentElement.style.opacity = "0.25";
+						available.parentElement.parentElement.parentElement.querySelector("button").style.backgroundColor = `var(--Dark-gray)`;
+						available.parentElement.parentElement.parentElement.querySelector("button").style.cursor = "initial";
+						available.parentElement.parentElement.parentElement.querySelector("button").textContent = `Out of Stock`;
+						available.parentElement.parentElement.parentElement.querySelector("button").setAttribute("disabled", "");
+
+						for (let pledgeAction of allPledgeActions) {
+							if (pledgeAction.getAttribute("id") === available.parentElement.parentElement.parentElement.getAttribute("class")) {
+								pledgeAction.style.opacity = "0.25";
+								pledgeAction.querySelector("input").setAttribute("disabled", "");
+								pledgeAction.querySelector("input").style.cursor = "initial";
+								pledgeAction.querySelector("label").style.cursor = "initial";
+								pledgeAction.querySelector("button").setAttribute("disabled", "");
+							}
+						}
+					}
+
 				})
 			}
 		}
